@@ -25,7 +25,7 @@ export default {
       });
     });
 
-    const commandsEmbed = new Discord.MessageEmbed()
+    const commandsEmbed = new Discord.EmbedBuilder()
       .setColor("#1f8df5")
       .setTitle(`Azuri - ${L._U(guildData.locale, "help")}`)
       .addFields(commands)
