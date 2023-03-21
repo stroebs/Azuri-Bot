@@ -29,11 +29,10 @@ export default {
       .setColor("#1f8df5")
       .setTitle(`Azuri - ${L._U(guildData.locale, "help")}`)
       .addFields(commands)
-      .setFooter(
-        `${L._U(guildData.locale, "created_by")} Ninja#4321 - Server Prefix ${
+      .setFooter({
+        text: `${L._U(guildData.locale, "created_by")} Ninja#4321 - Server Prefix ${
           guildData.preifx ? guildData.preifx : process.env.DEFAULT_PREFIX
-        }`
-      );
+        }`});
 
     try {
       message.author.send({ embeds: [commandsEmbed] });

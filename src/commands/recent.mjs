@@ -50,12 +50,9 @@ export default {
                 var currentTime = new Date(
                     new Date().toLocaleString("en-US", { timeZone: guildData.timezone })
                 );
-                recentlyPlayed.setFooter(
-                    `${L._U(
-            guildData.locale,
-            "generated_at"
-          )} ${currentTime.getHours()}:${currentTime.getMinutes()}`
-                );
+                recentlyPlayed.setFooter({ 
+                    text: `${L._U(guildData.locale,"generated_at")} ${currentTime.getHours()}:${currentTime.getMinutes()}`
+                });
                 message.channel.send({ embeds: [recentlyPlayed] });
             })
             .catch((err) => {
