@@ -24,7 +24,7 @@ Azuri is open-source, so you can host your own! Perfect if you want to customize
  - [Docker](https://www.docker.com/products/docker-desktop)
  - Docker Compose (included with Docker Desktop for Windows or Mac)
  - [Discord bot token](https://discord.com/developers/applications)
-   - [Read a how-to guide](https://discordpy.readthedocs.io/en/latest/discord.html)
+ - [Read a how-to guide](https://discordpy.readthedocs.io/en/latest/discord.html)
 
 #### Installation and Usage
 
@@ -42,11 +42,10 @@ Azuri is open-source, so you can host your own! Perfect if you want to customize
 
 To install and run:
 
- 1. Copy `azuri.sample.env` to `src/.env`
- 2. Change into the `src` directory
- 3. Edit `.env` with your Discord `BOT_TOKEN`
- 4. Run `npm ci`
- 5. Run `npm run azuri`
+ 1. Copy `azuri.sample.env` to `.env`
+ 2. Edit `.env` with your Discord `BOT_TOKEN`
+ 3. Run `npm i`
+ 4. Run `npm run azuri`
 
 ## Dependencies Used
 
