@@ -1,7 +1,7 @@
-FROM library/node:lts-alpine
+FROM library/node:bullseye-slim
 
-RUN apk update \
-    && apk add bash python3 make g++
+RUN apt update \
+    && apt install bash python3 make g++ -y
 
 RUN mkdir -p /data/node_modules
 

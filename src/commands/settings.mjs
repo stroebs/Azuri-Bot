@@ -12,8 +12,8 @@ export default {
             return message.channel.send(L._U(serverData.locale, "server_only"));
         if (!args.length)
             return message.channel.send(L._U(serverData.locale, "missing_args"));
-        if (!message.channel.permissionsFor(message.member).has("MANAGE_GUILD") ||
-            !message.channel.permissionsFor(message.member).has("ADMINISTRATOR")
+        if (!message.channel.permissionsFor(message.member).has(Discord.PermissionFlagsBits.ManageGuild) ||
+            !message.channel.permissionsFor(message.member).has(Discord.PermissionFlagsBits.Administrator)
         )
             return message.channel.send(
                 "❌ - Oh No! You've not got permission to use that!"

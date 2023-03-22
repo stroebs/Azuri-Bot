@@ -139,7 +139,7 @@ export default {
                 const newResource = createAudioResource(radioURL, {
                     inputType: StreamType.Arbitrary,
                 });
-                await sleep(5000)
+                await entersState(connection, VoiceConnectionStatus.Ready, 5e3).catch(() => { });
                 player.play(newResource);
             });
         } catch (e) {
