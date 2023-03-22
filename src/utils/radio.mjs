@@ -1,4 +1,4 @@
-import { createAudioPlayer, createAudioResource, joinVoiceChannel, NoSubscriberBehavior, StreamType, VoiceConnectionStatus, getVoiceConnection, AudioPlayerStatus } from "@discordjs/voice";
+import { createAudioPlayer, createAudioResource, joinVoiceChannel, NoSubscriberBehavior, StreamType, VoiceConnectionStatus, getVoiceConnection, AudioPlayerStatus, entersState } from "@discordjs/voice";
 
 export function playRadio(message, url, channel, guild){
     if (getVoiceConnection(guild ?? message.guild.id)) {
@@ -30,7 +30,7 @@ export function playRadio(message, url, channel, guild){
     player.play(resource);
 
     player.on(AudioPlayerStatus.Idle, async () => {
-        const newResource = createAudioResource(radioURL, {
+        const newResource = createAudioResource(url, {
             inputType: StreamType.Arbitrary,
         });
         await entersState(connection, VoiceConnectionStatus.Ready, 5e3).catch(() => { });

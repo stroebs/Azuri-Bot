@@ -49,6 +49,7 @@
         "desc_support": "Support information.",
         "desc_tuned": "View current listener numbers.",
         "invite": "Discord Invite",
+        "invalid_radio_url": "⚠ - That's not a valid radio URL! Try again.",
         "setting": "Settings",
         "current_prefix": "The current prefix is",
         "valid_translation": "Available Translations"

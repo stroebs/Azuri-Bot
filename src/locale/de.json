@@ -49,6 +49,7 @@
         "desc_support": "Support Information.",
         "desc_tuned": "Aktuelle Hörernummern anzeigen.",
         "invite": "Discord Einladung",
+        "invalid_radio_url": "⚠ - Die Radio URL ist ungültig! Versuch es noch mal.",
         "setting": "Einstellungen",
         "current_prefix": "Der aktuelle Präfix ist",
         "valid_translation": "Beschikbare Vertalingen"

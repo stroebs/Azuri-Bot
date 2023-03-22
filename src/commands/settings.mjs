@@ -105,12 +105,26 @@ export default {
             case "url":
                 if (args[0][1]) {
                     serverData.url = args[0][1];
-                    GuildUtils.writeForGuild(serverData);
+                    var eror;
+                    axios.get(serverData.url, {
+                        responseType: 'stream',
+                    }).catch((error) => {
+                        eror = true;
+                        return message.channel.send(
+                            `${L._U(serverData.locale, "invalid_radio_url")}`
+                        );
+                    }).then((response) => {
+                        if (eror) return;
+                        try {
+                            response.data.destroy();
+                        } catch { }
+                        GuildUtils.writeForGuild(serverData);
 
-                    console.log(
-                        `Changed Radio URL for ${message.guild.name} (${message.guild.id}) to ${args[0][1]}`
-                    );
-                    return message.channel.send(`📫 ${L._U(serverData.locale, "set")}!`);
+                        console.log(
+                            `Changed Radio URL for ${message.guild.name} (${message.guild.id}) to ${args[0][1]}`
+                        );
+                        return message.channel.send(`📫 ${L._U(serverData.locale, "set")}!`);
+                    });
                 } else {
                     return message.channel.send(
                         `${L._U(serverData.locale, "current_radio_url")}: ${serverData.url}`
@@ -151,9 +165,8 @@ export default {
                     }
                 } else {
                     return message.channel.send(
-                        `${L._U(serverData.locale, "current_locale")}: \`${
-              serverData.locale
-            }\``
+                        `${L._U(serverData.locale, "current_locale")}: \`${serverData.locale
+                        }\``
                     );
                 }
                 break;
@@ -170,12 +183,11 @@ export default {
                     return message.channel.send(`📫 ${L._U(serverData.locale, "set")}!`);
                 } else {
                     return message.channel.send(
-                        `${L._U(serverData.locale, "current_timezone")}: ${
-              serverData.timezone
-            } | ${L._U(
-              serverData.locale,
-              "full_list_timezone"
-            )} <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`
+                        `${L._U(serverData.locale, "current_timezone")}: ${serverData.timezone
+                        } | ${L._U(
+                            serverData.locale,
+                            "full_list_timezone"
+                        )} <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`
                     );
                 }
                 break;
@@ -183,11 +195,11 @@ export default {
             case "permission":
                 if (args[0][1]) {
                     if (!(
-                            client.commands.get(args[0][2]) ||
-                            client.commands.find(
-                                (cmd) => cmd.aliases && cmd.aliases.includes(args[0][2])
-                            )
-                        ))
+                        client.commands.get(args[0][2]) ||
+                        client.commands.find(
+                            (cmd) => cmd.aliases && cmd.aliases.includes(args[0][2])
+                        )
+                    ))
                         return message.channel.send(
                             L._U(serverData.locale, "no_find_command")
                         );

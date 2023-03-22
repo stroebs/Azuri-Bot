@@ -49,6 +49,7 @@
         "desc_support": "Hulp informatie.",
         "desc_tuned": "Bekijk de huidige luisteraarsnummers.",
         "invite": "Discord uitnodiging",
+        "invalid_radio_url": "⚠ - Dat is geen geldige radio link! Probeer nogmaals.",
         "setting": "instellingen",
         "current_prefix": "Het huidige voorvoegsel is",
         "valid_translation": "Beschikbare Vertalingen"

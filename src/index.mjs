@@ -23,9 +23,9 @@ const commandFiles = fs
     .readdirSync("./commands")
     .filter((file) => file.endsWith(".mjs"));
 
-commandFiles.forEach(async(file) => {
+commandFiles.forEach(async (file) => {
     let commandObj = await
-    import (`./commands/${file}`);
+        import(`./commands/${file}`);
     let command = commandObj.default;
 
     client.commands.set(command.name, command);
@@ -38,7 +38,7 @@ commandFiles.forEach(async(file) => {
     }
 });
 
-client.on("ready", async() => {
+client.on("ready", async () => {
     console.log(`Bot has Started`);
 
     var prefix = process.env.DEFAULT_PREFIX;
@@ -116,14 +116,14 @@ client.on("messageCreate", (message) => {
                         } else if (command.type === "permission") {
                             console.log(
                                 message.channel
-                                .permissionsFor(message.member)
-                                .has(command.permission)
+                                    .permissionsFor(message.member)
+                                    .has(command.permission)
                             );
                             console.log(command.permission);
                             if (
                                 message.channel
-                                .permissionsFor(message.member)
-                                .has(command.permission)
+                                    .permissionsFor(message.member)
+                                    .has(command.permission)
                             )
                                 return message.channel.send(
                                     "❌ - Oh No! You've not got permission to use that!"
