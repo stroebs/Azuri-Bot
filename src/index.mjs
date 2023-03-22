@@ -45,7 +45,8 @@ client.on("ready", async() => {
     var activityMessage = process.env.STATUS_MESSAGE.replace("{prefix}", prefix);
     var activityType = process.env.ACTIVITY_TYPE;
     var statusType = process.env.STATUS_TYPE;
-    client.user.setActivity(activityMessage, { type: activityType });
+    client.user.setPresence({ activities: [{ name: activityMessage, type: Discord.ActivityType[activityType] }], status: statusType });
+
     if (statusType) client.user.setStatus(statusType);
 
     let guildData = GuildUtils.loadGuildData();
@@ -147,5 +148,6 @@ global.sleep = (ms) => {
         setTimeout(resolve, ms);
     });
 };
+
 
 client.login(process.env.BOT_TOKEN);

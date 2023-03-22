@@ -20,11 +20,11 @@ export default {
                     "❌ - Oh No! You've not got permission to use that!"
                 );
         }
-
+    
         if (!(await getVoiceConnection(message.guild.id)))
             return message.channel.send(L._U(guildData.locale, "not_connected"));
 
-        await connection.destroy();
+        await getVoiceConnection(message.guild.id).destroy();
 
         message.channel.send("👋 Ok, bye");
     },

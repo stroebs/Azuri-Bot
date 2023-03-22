@@ -4,6 +4,7 @@ import Discord from "discord.js";
 import ffmpeg from "ffmpeg";
 import fs from "fs";
 let radioURL, voiceChannel, dispatcher, player;
+import * as radio from "../utils/radio.mjs";
 
 export default {
     name: "join",
@@ -16,47 +17,10 @@ export default {
             voiceChannel = guildData.home;
 
             let channel = client.channels.cache.get(guildData.home);
-
-            var connection;
-            try {
-                connection = await joinVoiceChannel({
-                    channelId: channel.id,
-                    guildId: channel.guild.id,
-                    adapterCreator: channel.guild.voiceAdapterCreator,
-                });
-            } catch (e) {
-                try {
-                    return message.channel.send(L._U(guildData.locale, "no_join"));
-                } catch (e) {
-                    if (guildData.home) {
-                        let s = client.channels.cache.get(guildData.home)
-                        if (s) s.guild.channels.cache.filter((c) => c.type === Discord.ChannelType.GuildText)
-                            .find((x) => x.position == 0)
-                            .send(L._U(guildData.locale, "no_join"));
-                    }
-                }
-            }
-            await entersState(connection, VoiceConnectionStatus.Ready, 5e3).catch(() => { });
+            if (!channel) return;
             
             try {
-                player = createAudioPlayer({
-                    behaviors: {
-                        noSubscriber: NoSubscriberBehavior.Play
-                    },
-                });
-                dispatcher = await connection.subscribe(player);
-                const resource = createAudioResource(radioURL, {
-                    inputType: StreamType.Arbitrary,
-                });
-
-                player.play(resource);
-                player.on(AudioPlayerStatus.Idle, async() => {
-                    const newResource = createAudioResource(radioURL, {
-                        inputType: StreamType.Arbitrary,
-                    });
-                    await sleep(5000)
-                    player.play(newResource);
-                });
+                radio.playRadio(message, radioURL, channel, channel.guild);
             } catch (e) {
                 try {
                     console.log(e);
@@ -106,42 +70,7 @@ export default {
         }
 
         try {
-            global.connection = await joinVoiceChannel({
-                channelId: message.member.voice.channel.id,
-                guildId: message.guild.id,
-                selfMute: false,
-                selfDeaf: true,
-                adapterCreator: message.guild.voiceAdapterCreator,
-            });
-        } catch (e) {
-            console.log(e);
-            return message.channel.send(L._U(guildData.locale, "no_join"));
-        }
-
-        try {
-            const connection = await getVoiceConnection(message.guild.id);
-
-            await entersState(connection, VoiceConnectionStatus.Ready, 5e3).catch(() => { });
-
-            player = createAudioPlayer({
-                behaviors: {
-                    noSubscriber: NoSubscriberBehavior.Play
-                },
-            });
-            dispatcher = await connection.subscribe(player);
-            const resource = createAudioResource(radioURL, {
-                inputType: StreamType.Arbitrary,
-            });
-
-            player.play(resource);
-
-            player.on(AudioPlayerStatus.Idle, async () => {
-                const newResource = createAudioResource(radioURL, {
-                    inputType: StreamType.Arbitrary,
-                });
-                await entersState(connection, VoiceConnectionStatus.Ready, 5e3).catch(() => { });
-                player.play(newResource);
-            });
+            radio.playRadio(message, radioURL, voiceChannel);
         } catch (e) {
             console.log(e);
             message.channel.send(L._U(guildData.locale, "stream_error"));
