@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { Client, Intents, Discord } from "discord.js";
+import Discord from "discord.js";
 import { getVoiceConnection } from '@discordjs/voice';
 import fs from "fs";
 import * as Utils from "./utils/utils.mjs";
