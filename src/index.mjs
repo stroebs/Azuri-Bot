@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-import Discord from "discord.js";
+import { Client, Intents, Discord } from "discord.js";
+import { getVoiceConnection } from '@discordjs/voice';
 import fs from "fs";
 import * as Utils from "./utils/utils.mjs";
 import * as GuildUtils from "./utils/guilds.mjs";
@@ -148,6 +149,28 @@ global.sleep = (ms) => {
         setTimeout(resolve, ms);
     });
 };
+
+client.on('voiceStateUpdate', (oldState, newState) => {
+  // Get the current voice connection for the guild
+  const connection = getVoiceConnection(oldState.guild.id);
+  if (!connection) return; // The bot is not connected to a voice channel
+
+  // Get the ID of the voice channel the bot is connected to
+  const botChannelId = connection.joinConfig.channelId;
+
+  // Fetch the voice channel the bot is connected to
+  const botVoiceChannel = oldState.guild.channels.cache.get(botChannelId);
+  if (!botVoiceChannel) return; // Voice channel not found
+
+  // Filter out bots from the member list
+  const humanMembers = botVoiceChannel.members.filter(member => !member.user.bot);
+
+  // If no human members are left, destroy the connection
+  if (humanMembers.size === 0) {
+    connection.destroy();
+    console.log(`Disconnected from voice channel ${botVoiceChannel.name} as it is now empty.`);
+  }
+});
 
 
 client.login(process.env.BOT_TOKEN);
