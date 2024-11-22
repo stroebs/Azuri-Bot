@@ -60,6 +60,15 @@ export default {
             if (!channel)
                 return message.channel.send(L._U(guildData.locale, "no_find_voice"));
 
+            // Get currently connected members
+            let humanMembers = channel.members.filter(member => !member.user.bot);
+            
+            // If no human members are left, destroy the connection
+            if (humanMembers.size === 0) {
+                console.log(`Did not join ${channel.name} as it is empty.`);
+                return;
+            }
+
             radioURL = guildData.url;
             voiceChannel = channel;
         } else if (args[0][0] === "test") {
